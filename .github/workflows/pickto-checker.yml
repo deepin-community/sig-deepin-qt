@@ -1,0 +1,44 @@
+name: Pick-to Checker
+on:
+  schedule:
+    - cron: '30 1 * * *'
+  workflow_dispatch:
+    inputs:
+      in-date:
+        description: 'Check for which date?'     
+        required: true
+        default: '2022-12-15'
+      dry-run:
+        description: 'Avoid actually create any issue'
+        type: boolean
+
+jobs:
+  team-mgr:
+    name: "Pick-to Checker"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' 
+      - name: Install python depencencies
+        run: pip install sh
+      - name: Main Step (scheduled)
+        if: ${{ github.event_name == 'schedule' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python task.py
+      - name: Main Step (workflow_dispatch)
+        if: ${{ github.event_name == 'workflow_dispatch' && !inputs.dry-run }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python task.py -i ${{ inputs.in-date }}
+      - name: Main Step (workflow_dispatch, dry-run)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python task.py -i ${{ inputs.in-date }} -d
+
