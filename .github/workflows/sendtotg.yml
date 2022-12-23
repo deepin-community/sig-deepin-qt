@@ -1,0 +1,22 @@
+name: Send to Telegram
+
+on:
+  issues:
+    types:
+      - reopened
+      - opened
+
+jobs:
+  sendMessage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: send telegram message on comment opened
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.ID }}
+          token: ${{ secrets.TOKEN }}
+          message: |
+            Title: ${{ github.event.issue.title }}
+            Link: ${{ github.event.issue.html_url }}
+            Body: ${{ github.event.issue.body }}
