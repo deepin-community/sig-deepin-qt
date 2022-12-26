@@ -36,7 +36,13 @@
 
 ## 讨论渠道
 
-[邮件列表 ](https://www.freelists.org/list/deepin-qt)、[Telegram](https://t.me/deepin_community)。
+[邮件列表 ](https://www.freelists.org/list/deepin-qt-team)
+
+IRC： OFTC #deepin-qt
+
+Matrix： #_oftc_#deepin-qt:matrix.org
+
+Telegram: https://t.me/+D6uDe0TrE4llZGI1
 
 ## 相关链接
 
